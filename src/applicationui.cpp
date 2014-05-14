@@ -14,19 +14,22 @@ using namespace bb::cascades;
 ApplicationUI::ApplicationUI(bb::cascades::Application *app)
 	: QObject(app)
 {
-	ThemeSupport* themeSupport = app->themeSupport();
-	Theme* currentTheme = themeSupport->theme();
-	ColorTheme* colorTheme = currentTheme->colorTheme();
-	VisualStyle::Type style = colorTheme->style();
-	switch (style)
-	{
-	case VisualStyle::Bright:
-		m_theme = Bright;
-		break;
-	case VisualStyle::Dark:
-		m_theme = Dark;
-		break;
-	}
+    if (settings->value("THEME", -1).toInt() < 0)
+    {
+        ThemeSupport* themeSupport = app->themeSupport();
+        Theme* currentTheme = themeSupport->theme();
+        ColorTheme* colorTheme = currentTheme->colorTheme();
+        VisualStyle::Type style = colorTheme->style();
+        switch (style)
+        {
+        case VisualStyle::Bright:
+            settings->setValue("THEME", 0);
+            break;
+        case VisualStyle::Dark:
+            settings->setValue("THEME", 1);
+            break;
+        }
+    }
     // create scene document from main.qml asset
     // set parent to created document to ensure it exists for the whole application lifetime
     QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
@@ -38,25 +41,7 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app)
     app->setScene(root);
 }
 
-void ApplicationUI::themeIndex(int index)
+ApplicationUI::~ApplicationUI()
 {
-	if (index == m_theme)
-		return;
-	QFile::remove("data/dark.dat");
-	QFile::remove("data/bright.dat");
-	if (index == 0)
-	{
-		QFile file("data/bright.dat");
-		file.open(QFile::WriteOnly);
-		file.close();
-		m_theme = Bright;
-	}
-	else
-	{
-		QFile file("data/dark.dat");
-		file.open(QFile::WriteOnly);
-		file.close();
-		m_theme = Dark;
-	}
 }
 
