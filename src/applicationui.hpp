@@ -40,7 +40,7 @@ signals:
 protected:
     inline int themeIndex() const { return settings->value("THEME", 0).toInt(); }
     inline int primaryColourIndex() const { return settings->value("PRIMARY_COLOUR_INDEX", 0).toInt(); }
-    inline int primaryColourRed() const { fprintf(stderr, "Primary Colour Red: %d\n", settings->value("PRIMARY_COLOUR_R", 255).toInt()); return settings->value("PRIMARY_COLOUR_R", 255).toInt(); }
+    inline int primaryColourRed() const { return settings->value("PRIMARY_COLOUR_R", 255).toInt(); }
     inline int primaryColourGreen() const { return settings->value("PRIMARY_COLOUR_G", 0).toInt(); }
     inline int primaryColourBlue() const { return settings->value("PRIMARY_COLOUR_B", 0).toInt(); }
     inline int baseColourIndex() const { return settings->value("BASE_COLOUR_INDEX", 0).toInt(); }
@@ -50,7 +50,7 @@ protected:
 
     inline void themeIndex(int index) { settings->setValue("THEME", index); }
     inline void primaryColourIndex(int index) { settings->setValue("PRIMARY_COLOUR_INDEX", index); }
-    inline void primaryColourRed(int value) { settings->setValue("PRIMARY_COLOUR_R", value); fprintf(stderr, "Set primary Colour Red: %d\n", settings->value("PRIMARY_COLOUR_R", 255).toInt()); }
+    inline void primaryColourRed(int value) { settings->setValue("PRIMARY_COLOUR_R", value); }
     inline void primaryColourGreen(int value) { settings->setValue("PRIMARY_COLOUR_G", value); }
     inline void primaryColourBlue(int value) { settings->setValue("PRIMARY_COLOUR_B", value); }
     inline void baseColourIndex(int index) { settings->setValue("BASE_COLOUR_INDEX", index); }

@@ -43,7 +43,6 @@ Q_DECL_EXPORT int main(int argc, char **argv)
             themeString += ("00" + QString::number(settings->value("BASE_COLOUR_B", 255).toInt() & 0xFF, 16).toUpper()).right(2);
         }
 	}
-	fprintf(stderr, "Theme string: %s\n", themeString.toAscii().data());
     setenv("CASCADES_THEME", themeString.toAscii().data(), 1);
     // this is where the server is started etc
     Application app(argc, argv);
